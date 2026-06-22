@@ -20,7 +20,11 @@
   async function initAuth() {
     const { data } = await sb.auth.getSession();
     handleSession(data.session);
-    sb.auth.onAuthStateChange((_e, session) => handleSession(session));
+    // ATH: ekki kalla á await sb.* beint inni í þessu callbacki — það læsir
+    // auth-lásnum (deadlock). setTimeout keyrir handleSession utan við hann.
+    sb.auth.onAuthStateChange((_e, session) => {
+      setTimeout(() => handleSession(session), 0);
+    });
 
     $("login-btn").addEventListener("click", async () => {
       $("login-err").textContent = "";
