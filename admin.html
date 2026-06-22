@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verkhönnun — Stjórnborð</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="assets/favicon/favicon-green.svg">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login" id="login" hidden>
+  <div class="login__card">
+    <span class="vh-svg login__logo" data-vh="assets/logo/wordmark-green.svg" style="display:block;width:180px;height:auto;"></span>
+    <h1>Stjórnborð</h1>
+    <p>Skráðu þig inn með Google-reikningi á léninu <b>@verkhonnun.is</b> til að breyta efni vefsíðunnar.</p>
+    <button class="btn btn--green" id="login-btn" style="margin-top:24px;">Skrá inn með Google</button>
+    <p class="login__err" id="login-err"></p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" hidden>
+  <div class="bar">
+    <span class="vh-svg bar__logo" data-vh="assets/logo/wordmark-green.svg" style="width:150px;height:auto;"></span>
+    <span class="bar__title">Stjórnborð</span>
+    <div class="bar__spacer"></div>
+    <span class="bar__user" id="user-email"></span>
+    <a href="index.html" class="btn btn--ghost btn--sm" target="_blank" rel="noopener">Skoða vef ↗</a>
+    <button class="btn btn--ghost btn--sm" id="logout-btn">Útskrá</button>
+  </div>
+
+  <div class="shell">
+    <div class="tabs" id="tabs">
+      <button class="tab is-active" data-tab="text">Texti</button>
+      <button class="tab" data-tab="services">Þjónusta</button>
+      <button class="tab" data-tab="values">Gildi</button>
+      <button class="tab" data-tab="guides">Leiðarljós</button>
+      <button class="tab" data-tab="projects">Verkefni</button>
+      <button class="tab" data-tab="team">Teymi</button>
+      <button class="tab" data-tab="submissions">Fyrirspurnir</button>
+    </div>
+    <div id="panel"><div class="loading">Hleð…</div></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/brand.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

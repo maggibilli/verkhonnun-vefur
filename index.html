@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verkhönnun — Lausnir</title>
+<meta name="description" content="Verkhönnun er verkfræðifyrirtæki sem sameinar mannlega nálgun og djúpa sérfræðiþekkingu. Rafmagnsverkfræði frá hugmynd að rekstri.">
+<link rel="icon" href="assets/favicon/favicon-green.svg">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav__in">
+    <a href="#" class="nav__logo"><span class="vh-svg logo-word" data-vh="assets/logo/wordmark-green.svg"></span></a>
+    <nav class="nav__links">
+      <a href="#thjonusta" data-key="nav.services">Þjónusta</a>
+      <a href="#um" data-key="nav.about">Um okkur</a>
+      <a href="#verkefni" data-key="nav.projects">Verkefni</a>
+      <a href="#teymi" data-key="nav.team">Teymið</a>
+      <a href="#hafa-samband" data-key="nav.contact">Hafa samband</a>
+    </nav>
+    <div class="nav__right">
+      <div class="lang" role="group" aria-label="Tungumál">
+        <button data-lang="is">IS</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <a href="#hafa-samband" class="btn btn--green" data-key="nav.cta">Fá ráðgjöf</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero__bgmark vh-svg" data-vh="assets/logo/symbol-green.svg"></span>
+  <div class="wrap hero__in">
+    <span class="eyebrow" data-key="hero.eyebrow">Verkfræðiráðgjöf · Rafmagn</span>
+    <h1 style="margin-top:24px;"><span data-key="hero.title">Hugvit í nánu samstarfi skapar betri lausnir.</span></h1>
+    <p class="hero__sub" data-key="hero.sub">Verkhönnun er verkfræðifyrirtæki sem sameinar mannlega nálgun og djúpa sérfræðiþekkingu.</p>
+    <div class="hero__cta">
+      <a href="#hafa-samband" class="btn btn--green"><span data-key="hero.ctaPrimary">Ræða verkefni</span> <span class="arr">→</span></a>
+      <a href="#thjonusta" class="btn btn--ghost" data-key="hero.ctaSecondary">Skoða þjónustu</a>
+    </div>
+    <div class="hero__stats">
+      <div><b data-key="hero.stat1n">Lausnir</b><span data-key="hero.stat1l">sem virka inn í framtíðina</span></div>
+      <div><b data-key="hero.stat2n">Persónuleg</b><span data-key="hero.stat2l">nálgun í hverju verkefni</span></div>
+      <div><b data-key="hero.stat3n">Fagmennska</b><span data-key="hero.stat3l">og ábyrgð að leiðarljósi</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec sec--panel" id="thjonusta">
+  <div class="wrap">
+    <div class="shead">
+      <span class="eyebrow" data-key="servicesSection.eyebrow">Þjónusta</span>
+      <h2 data-key="servicesSection.title">Rafmagnsverkfræði frá hugmynd að rekstri</h2>
+      <p data-key="servicesSection.intro">Við veitum lausnamiðaða og persónulega verkfræðiráðgjöf.</p>
+    </div>
+    <div class="svc" id="svc-list"></div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <span class="statement__mark vh-svg" data-vh="assets/logo/symbol-navy.svg"></span>
+  <div class="wrap">
+    <div class="statement__eye" data-key="about.eyebrow">Um Verkhönnun</div>
+    <h2 data-key="about.title">Mannleg nálgun og fagleg festa fara saman</h2>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec" id="um">
+  <div class="wrap shead" style="max-width:900px;">
+    <p style="font-size:clamp(20px,2.2vw,28px);color:var(--ink);font-weight:400;line-height:1.5;" data-key="about.p1">…</p>
+    <p style="margin-top:22px;color:var(--muted);" data-key="about.p2">…</p>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="sec sec--panel" id="gildi">
+  <div class="wrap">
+    <div class="shead">
+      <span class="eyebrow" data-key="values.eyebrow">Kjarninn</span>
+      <h2 data-key="values.title">Þrjú gildi sem skilgreina okkur</h2>
+    </div>
+    <div class="vals" id="vals"></div>
+    <div class="guides" id="guides"></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="sec" id="verkefni">
+  <div class="wrap">
+    <div class="shead">
+      <span class="eyebrow" data-key="projects.eyebrow">Verkefni</span>
+      <h2 data-key="projects.title">Valin verkefni</h2>
+      <p data-key="projects.intro">Dæmi um verkefni á sviði rafmagnsverkfræði.</p>
+    </div>
+    <div class="projs" id="projs"></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="sec sec--panel" id="teymi">
+  <div class="wrap">
+    <div class="shead">
+      <span class="eyebrow" data-key="team.eyebrow">Teymið</span>
+      <h2 data-key="team.title">Fólkið á bak við lausnirnar</h2>
+      <p data-key="team.intro">Lítið og samhent teymi verkfræðinga og tæknifræðinga.</p>
+    </div>
+    <div class="team" id="team"></div>
+    <p class="note" data-key="team.note">Sýnishorn — nöfn og myndir uppfærð síðar.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec" id="hafa-samband">
+  <div class="wrap contact">
+    <div>
+      <span class="eyebrow" data-key="contact.eyebrow">Hafa samband</span>
+      <h2><span data-key="contact.title">Ræðum næsta verkefni</span></h2>
+      <p class="contact__sub" data-key="contact.sub">Sendu okkur línu og við svörum fljótt.</p>
+      <div class="contact__info">
+        <div class="cinfo"><b data-key="contact.mailL">Tölvupóstur</b><a id="contact-email" href="mailto:verkhonnun@verkhonnun.is" data-key="contact.emailV">verkhonnun@verkhonnun.is</a></div>
+        <div class="cinfo"><b data-key="contact.locL">Staðsetning</b><span data-key="contact.locV">Reykjavík, Ísland</span></div>
+      </div>
+    </div>
+    <form class="form" id="contact-form">
+      <div class="field"><label data-key="contact.nameL">Nafn</label><input type="text" name="name" autocomplete="name" required></div>
+      <div class="field"><label data-key="contact.emailL">Netfang</label><input type="email" name="email" autocomplete="email" required></div>
+      <div class="field"><label data-key="contact.msgL">Skilaboð</label><textarea name="message" required></textarea></div>
+      <button type="submit" class="btn btn--green" data-key="contact.send">Senda fyrirspurn</button>
+      <p class="form__msg" id="form-msg" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__top">
+      <div>
+        <span class="vh-svg logo-word" data-vh="assets/logo/wordmark-green.svg" style="height:36px;"></span>
+        <p class="foot__tag" data-key="footer.tagline">Hugvit í nánu samstarfi skapar betri lausnir.</p>
+      </div>
+      <div class="foot__links">
+        <div class="foot__col">
+          <b data-key="nav.services">Þjónusta</b>
+          <a href="#thjonusta" data-key="nav.services">Þjónusta</a>
+          <a href="#verkefni" data-key="nav.projects">Verkefni</a>
+          <a href="#teymi" data-key="nav.team">Teymið</a>
+        </div>
+        <div class="foot__col">
+          <b data-key="nav.about">Um okkur</b>
+          <a href="#um" data-key="nav.about">Um okkur</a>
+          <a href="#gildi" data-key="values.eyebrow">Kjarninn</a>
+          <a href="#hafa-samband" data-key="nav.contact">Hafa samband</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span data-key="footer.rights">Verkhönnun ehf · Öll réttindi áskilin</span>
+      <span>© 2026 · <a href="admin.html" class="foot__admin">Admin</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/brand.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>

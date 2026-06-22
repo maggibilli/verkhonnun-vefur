@@ -1,0 +1,26 @@
+/* General Sans — Verkhönnun brand typeface */
+@font-face{
+  font-family:'General Sans';
+  src:url('assets/fonts/GeneralSans-Light.woff2') format('woff2');
+  font-weight:300; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:'General Sans';
+  src:url('assets/fonts/GeneralSans-Regular.woff2') format('woff2');
+  font-weight:400; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:'General Sans';
+  src:url('assets/fonts/GeneralSans-Medium.woff2') format('woff2');
+  font-weight:500; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:'General Sans';
+  src:url('assets/fonts/GeneralSans-Semibold.woff2') format('woff2');
+  font-weight:600; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:'General Sans';
+  src:url('assets/fonts/GeneralSans-Bold.woff2') format('woff2');
+  font-weight:700; font-style:normal; font-display:swap;
+}
