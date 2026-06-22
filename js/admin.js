@@ -209,7 +209,7 @@
       ],
     },
     projects: {
-      table: "projects", title: "Verkefni", image: true,
+      table: "projects", title: "Verkefni", image: true, publishable: true,
       label: (r) => r.title_is || "Nýtt verkefni",
       fields: [
         { k: "tag_is", l: "Merki (IS)", t: "text", w: "half" },
@@ -223,7 +223,7 @@
       ],
     },
     team: {
-      table: "team", title: "Teymi", image: true,
+      table: "team", title: "Teymi", image: true, publishable: true,
       label: (r) => r.name || "Nýr meðlimur",
       fields: [
         { k: "name", l: "Nafn", t: "text" },
@@ -275,8 +275,12 @@
     if (pending.length) fields += halfRow(pending, r);
 
     const img = cfg.image ? imageBlock(r) : "";
+    const hidden = cfg.publishable && r.published === false;
+    const toggle = cfg.publishable
+      ? `<button class="btn btn--sm pubtoggle ${hidden ? "is-off" : "is-on"}" data-act="toggle" title="${hidden ? "Smelltu til að birta" : "Smelltu til að fela"}">${hidden ? "● Falið" : "● Birt"}</button>`
+      : "";
     return `
-      <div class="card" data-id="${esc(r.id)}">
+      <div class="card${hidden ? " is-hidden" : ""}" data-id="${esc(r.id)}">
         <div class="card__head">
           <span class="lbl">${esc(cfg.label(r))}</span>
           <div class="right">
@@ -284,6 +288,7 @@
               <button data-act="up" ${idx === 0 ? "disabled" : ""} title="Færa upp">↑</button>
               <button data-act="down" ${idx === total - 1 ? "disabled" : ""} title="Færa niður">↓</button>
             </div>
+            ${toggle}
             <span class="savestate" data-state></span>
             <button class="btn btn--green btn--sm" data-act="save">Vista</button>
             <button class="btn btn--danger btn--sm" data-act="del">Eyða</button>
@@ -362,6 +367,15 @@
       const { error } = await sb.from(cfg.table).update(gather()).eq("id", id);
       if (error) setState("err", "Villa");
       else { setState("ok", "Vistað ✓"); const lbl = card.querySelector(".lbl"); }
+    });
+
+    const toggleBtn = card.querySelector('[data-act="toggle"]');
+    if (toggleBtn) toggleBtn.addEventListener("click", async () => {
+      const row = rows.find((r) => String(r.id) === String(id));
+      const next = !(row && row.published !== false); // núverandi birt -> fela
+      const { error } = await sb.from(cfg.table).update({ published: next, updated_at: new Date().toISOString() }).eq("id", id);
+      if (error) return alert("Villa: " + error.message);
+      renderList(panel, cfg);
     });
 
     card.querySelector('[data-act="del"]').addEventListener("click", async () => {

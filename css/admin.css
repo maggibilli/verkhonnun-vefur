@@ -53,6 +53,14 @@ button{font-family:inherit;}
 .btn--sm{padding:7px 14px;font-size:13px;}
 .btn[disabled]{opacity:.5;cursor:default;}
 
+/* birta/fela rofi */
+.pubtoggle{border:1px solid var(--line);background:transparent;}
+.pubtoggle.is-on{color:var(--green);border-color:rgba(81,255,128,.45);}
+.pubtoggle.is-off{color:var(--faint);border-color:var(--line);}
+.pubtoggle:hover{border-color:var(--green);}
+.card.is-hidden{opacity:.55;}
+.card.is-hidden .lbl::after{content:" — falið";color:var(--faint);}
+
 .toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
 .toolbar h2{font-size:20px;font-weight:600;letter-spacing:-.01em;}
 .toolbar .right{margin-left:auto;display:flex;gap:10px;align-items:center;}
