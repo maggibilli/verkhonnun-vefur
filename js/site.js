@@ -94,11 +94,17 @@
       const media = img
         ? `<img src="${esc(img)}" alt="${esc(m.name)}" loading="lazy">`
         : `<span class="wm vh-svg" data-vh="assets/logo/symbol-green.svg" style="width:52%;left:50%;transform:translateX(-50%);bottom:-11%;"></span><span class="mem__ph">Portrett</span>`;
+      const email = (m.email || "").trim();
+      const phone = (m.phone || "").trim();
+      const contact =
+        (email ? `<a class="mem__c" href="mailto:${esc(email)}">${esc(email)}</a>` : "") +
+        (phone ? `<a class="mem__c" href="tel:${esc(phone.replace(/\s+/g, ""))}">${esc(phone)}</a>` : "");
       return `
       <div class="mem">
         <div class="mem__img">${media}</div>
         <h4>${esc(m.name)}</h4>
         <span>${esc(m["role_" + L])}</span>
+        ${contact ? `<div class="mem__contact">${contact}</div>` : ""}
       </div>`;
     }).join("");
 

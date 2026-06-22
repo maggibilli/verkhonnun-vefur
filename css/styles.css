@@ -129,6 +129,9 @@ section{position:relative;}
 .mem__ph{position:relative;color:var(--faint);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:14px 16px;}
 .mem h4{font-size:18.5px;font-weight:600;margin-top:18px;letter-spacing:-.01em;}
 .mem span{display:block;color:var(--muted);font-size:14px;margin-top:4px;}
+.mem__contact{margin-top:10px;display:flex;flex-direction:column;gap:3px;}
+.mem__c{font-size:13.5px;color:var(--muted);transition:color .18s;width:fit-content;}
+.mem__c:hover{color:var(--green);}
 .note{margin-top:20px;font-size:13px;color:var(--faint);font-style:italic;}
 
 /* CONTACT */

@@ -229,6 +229,8 @@
         { k: "name", l: "Nafn", t: "text" },
         { k: "role_is", l: "Hlutverk (IS)", t: "text", w: "half" },
         { k: "role_en", l: "Hlutverk (EN)", t: "text", w: "half" },
+        { k: "email", l: "Netfang", t: "text", w: "half" },
+        { k: "phone", l: "Símanúmer", t: "text", w: "half" },
       ],
     },
   };
