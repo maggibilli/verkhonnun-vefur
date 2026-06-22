@@ -12,7 +12,8 @@
     String(s == null ? "" : s)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
-  const icons = Array.from({ length: 21 }, (_, i) => "i" + (14 + i)); // i14..i34
+  // Einstök tákn (i14..i34 innihalda afrit — þetta eru einu einstöku táknin)
+  const icons = ["i14", "i15", "i17", "i18", "i19", "i20", "i21", "i22", "i23", "i24", "i25"];
 
   // ---------------------------------------------------------
   // AUTH
