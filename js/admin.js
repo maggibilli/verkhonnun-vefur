@@ -5,8 +5,8 @@
    ============================================================ */
 (function () {
   const sb = window.vhClient;
-  const ALLOWED_DOMAIN = "@verkhonnun.is";
 
+  let currentEmail = null;
   const $ = (id) => document.getElementById(id);
   const esc = (s) =>
     String(s == null ? "" : s)
@@ -39,12 +39,19 @@
     });
   }
 
-  function handleSession(session) {
+  async function handleSession(session) {
     const email = session && session.user && session.user.email;
     if (!session) return showLogin();
-    if (!email || !email.toLowerCase().endsWith(ALLOWED_DOMAIN)) {
+    // Aðgangur ræðst af hvítlista (admins-töflu), ekki léninu.
+    const { data: allowed, error } = await sb.rpc("is_admin");
+    if (error) {
       sb.auth.signOut();
-      showLogin("Aðgangur er aðeins fyrir netföng á léninu " + ALLOWED_DOMAIN + ".");
+      showLogin("Villa við að staðfesta aðgang. Reyndu aftur.");
+      return;
+    }
+    if (!allowed) {
+      sb.auth.signOut();
+      showLogin("Netfangið " + (email || "") + " hefur ekki aðgang að stjórnborðinu. Hafðu samband við stjórnanda til að fá aðgang.");
       return;
     }
     showApp(email);
@@ -58,6 +65,7 @@
   }
 
   function showApp(email) {
+    currentEmail = email;
     $("login").hidden = true;
     $("app").hidden = false;
     $("user-email").textContent = email;
@@ -84,6 +92,7 @@
     panel.innerHTML = '<div class="loading">Hleð…</div>';
     if (tab === "text") return renderText(panel);
     if (tab === "submissions") return renderSubmissions(panel);
+    if (tab === "admins") return renderAdmins(panel);
     return renderList(panel, TABLES[tab]);
   }
 
@@ -426,6 +435,81 @@
         if (!confirm("Eyða þessari fyrirspurn?")) return;
         await sb.from("submissions").delete().eq("id", id);
         renderSubmissions(panel);
+      });
+    });
+  }
+
+  // ---------------------------------------------------------
+  // AÐGANGUR (admins-hvítlisti)
+  // ---------------------------------------------------------
+  async function renderAdmins(panel) {
+    const { data, error } = await sb.from("admins").select("*").order("added_at");
+    if (error) return (panel.innerHTML = errBox(error));
+    const rows = data || [];
+
+    let html = `
+      <div class="toolbar">
+        <h2>Aðgangur að stjórnborði</h2>
+      </div>
+      <div class="card">
+        <div class="card__head"><span class="lbl">Bæta við admin</span></div>
+        <div class="grid2">
+          <div class="field">
+            <label>Netfang (@verkhonnun.is)</label>
+            <input id="new-admin" type="email" placeholder="nafn@verkhonnun.is" autocomplete="off">
+          </div>
+          <div class="field" style="justify-content:flex-end;">
+            <label>&nbsp;</label>
+            <button class="btn btn--green" id="add-admin">Bæta við</button>
+          </div>
+        </div>
+        <p class="field hint" id="admin-msg" style="min-height:1.2em;"></p>
+        <p class="hint">Aðeins netföng á þessum lista komast inn í stjórnborðið. Viðkomandi þarf líka að skrá sig inn með Google-reikningi á sama netfangi.</p>
+      </div>
+      <div id="admin-rows">`;
+    rows.forEach((r) => {
+      const isMe = currentEmail && r.email.toLowerCase() === currentEmail.toLowerCase();
+      const date = new Date(r.added_at).toLocaleDateString("is-IS");
+      html += `
+        <div class="card" data-email="${esc(r.email)}">
+          <div class="card__head">
+            <span class="lbl">${esc(r.email)}${isMe ? " — þú" : ""}</span>
+            <div class="right">
+              <span class="hint">bætt við ${esc(date)}</span>
+              <button class="btn btn--danger btn--sm" data-act="del" ${isMe ? "disabled title='Þú getur ekki fjarlægt sjálfa/n þig'" : ""}>Fjarlægja</button>
+            </div>
+          </div>
+        </div>`;
+    });
+    html += `</div>`;
+    panel.innerHTML = html;
+
+    const msg = $("admin-msg");
+    $("add-admin").addEventListener("click", async () => {
+      const input = $("new-admin");
+      const email = (input.value || "").trim().toLowerCase();
+      msg.className = "field hint";
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        msg.textContent = "Sláðu inn gilt netfang.";
+        return;
+      }
+      msg.textContent = "Bæti við…";
+      const { error } = await sb.from("admins").insert({ email, added_by: currentEmail });
+      if (error) {
+        msg.textContent = error.code === "23505" ? "Þetta netfang er þegar á listanum." : "Villa: " + error.message;
+      } else {
+        renderAdmins(panel);
+      }
+    });
+
+    panel.querySelectorAll(".card[data-email]").forEach((card) => {
+      const del = card.querySelector('[data-act="del"]');
+      if (del && !del.disabled) del.addEventListener("click", async () => {
+        const email = card.getAttribute("data-email");
+        if (!confirm("Fjarlægja aðgang fyrir " + email + "?")) return;
+        const { error } = await sb.from("admins").delete().eq("email", email);
+        if (error) return alert("Villa: " + error.message);
+        renderAdmins(panel);
       });
     });
   }
