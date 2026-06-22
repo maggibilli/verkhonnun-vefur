@@ -386,8 +386,12 @@
         setState("", "Hleð upp mynd…");
         const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
         const path = `${cfg.table}/${id}-${Date.now()}.${ext}`;
-        const up = await sb.storage.from(window.VH_SUPABASE.bucket).upload(path, file, { upsert: true });
-        if (up.error) return setState("err", "Villa við upphal");
+        const up = await sb.storage.from(window.VH_SUPABASE.bucket).upload(path, file, { upsert: true, contentType: file.type || undefined });
+        if (up.error) {
+          console.error("Upload error:", up.error);
+          alert("Villa við að hlaða upp mynd:\n" + (up.error.message || up.error) + "\n(statusCode: " + (up.error.statusCode || "?") + ")");
+          return setState("err", "Villa við upphal");
+        }
         const { error } = await sb.from(cfg.table).update({ image_path: path, updated_at: new Date().toISOString() }).eq("id", id);
         if (error) return setState("err", "Villa");
         renderList(panel, cfg);
