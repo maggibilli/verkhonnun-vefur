@@ -32,8 +32,8 @@
       sb.from("services").select("*").order("sort_order"),
       sb.from("core_values").select("*").order("sort_order"),
       sb.from("guides").select("*").order("sort_order"),
-      sb.from("projects").select("*").order("sort_order"),
-      sb.from("team").select("*").order("sort_order"),
+      sb.from("projects").select("*").eq("published", true).order("sort_order"),
+      sb.from("team").select("*").eq("published", true).order("sort_order"),
     ]);
 
     (content.data || []).forEach((r) => {
