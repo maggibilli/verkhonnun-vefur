@@ -114,12 +114,15 @@
     document.querySelectorAll("[data-key]").forEach((el) => {
       const v = state.content[el.getAttribute("data-key")];
       if (v && v[lang] != null) {
+        const text = v[lang];
         if (el.id === "contact-email") {
-          el.textContent = v[lang];
-          el.setAttribute("href", "mailto:" + v[lang]);
+          el.textContent = text;
+          el.setAttribute("href", "mailto:" + text);
         } else {
-          el.textContent = v[lang];
+          el.textContent = text;
         }
+        // fela reit ef textinn er tómur (admin getur hreinsað texta til að fela hann)
+        el.style.display = text.trim() === "" ? "none" : "";
       }
     });
 
