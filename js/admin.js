@@ -8,13 +8,6 @@
 
   let currentEmail = null;
   const $ = (id) => document.getElementById(id);
-  const _dbg = [];
-  function dbg(s) {
-    _dbg.push(s);
-    console.log("[VH]", s);
-    const el = document.getElementById("login-dbg");
-    if (el) el.textContent = _dbg.join("\n");
-  }
   const esc = (s) =>
     String(s == null ? "" : s)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -25,14 +18,11 @@
   // AUTH
   // ---------------------------------------------------------
   async function initAuth() {
-    dbg("init, hash=" + (location.hash ? "JÁ(" + location.hash.length + ")" : "nei") + " search=" + (location.search ? "JÁ" : "nei"));
-    const { data, error } = await sb.auth.getSession();
-    dbg("getSession -> session=" + !!(data && data.session) + " email=" + (data && data.session && data.session.user && data.session.user.email) + (error ? " ERR=" + error.message : ""));
+    const { data } = await sb.auth.getSession();
     handleSession(data.session);
     // ATH: ekki kalla á await sb.* beint inni í þessu callbacki — það læsir
     // auth-lásnum (deadlock). setTimeout keyrir handleSession utan við hann.
-    sb.auth.onAuthStateChange((evt, session) => {
-      dbg("onAuthStateChange -> " + evt + " session=" + !!session);
+    sb.auth.onAuthStateChange((_e, session) => {
       setTimeout(() => handleSession(session), 0);
     });
 
@@ -55,11 +45,9 @@
 
   async function handleSession(session) {
     const email = session && session.user && session.user.email;
-    dbg("handleSession -> session=" + !!session + " email=" + email);
     if (!session) return showLogin();
     // Aðgangur ræðst af hvítlista (admins-töflu), ekki léninu.
     const { data: allowed, error } = await sb.rpc("is_admin");
-    dbg("is_admin -> " + allowed + (error ? " ERR=" + error.message : ""));
     if (error) {
       sb.auth.signOut();
       showLogin("Villa við að staðfesta aðgang. Reyndu aftur.");
