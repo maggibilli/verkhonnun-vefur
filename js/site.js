@@ -158,6 +158,7 @@
         name: (fd.get("name") || "").toString().trim(),
         email: (fd.get("email") || "").toString().trim(),
         message: (fd.get("message") || "").toString().trim(),
+        lang: lang,
       };
       msg.className = "form__msg";
       msg.textContent = lang === "en" ? "Sending…" : "Sendi…";
