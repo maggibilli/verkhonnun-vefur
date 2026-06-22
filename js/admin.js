@@ -259,6 +259,7 @@
     });
 
     panel.querySelectorAll(".card[data-id]").forEach((card) => wireCard(panel, cfg, card, rows));
+    if (window.VH_brand) window.VH_brand(); // innfella tákn í velaranum
   }
 
   function cardHtml(cfg, r, idx, total) {
@@ -293,8 +294,14 @@
   function fieldHtml(f, r) {
     const v = r[f.k];
     if (f.t === "icon") {
-      const opts = icons.map((ic) => `<option value="${ic}" ${v === ic ? "selected" : ""}>${ic}</option>`).join("");
-      return `<div class="field"><label>${esc(f.l)}</label><select data-f="${f.k}">${opts}</select></div>`;
+      const cur = v || "i19";
+      const cells = icons.map((ic) =>
+        `<button type="button" class="iconpick__btn${ic === cur ? " is-sel" : ""}" data-ic="${ic}" title="${ic}">
+           <span class="vh-svg" data-vh="assets/icons/${ic}.svg"></span>
+         </button>`).join("");
+      return `<div class="field"><label>${esc(f.l)}</label>
+        <input type="hidden" data-f="${f.k}" value="${esc(cur)}">
+        <div class="iconpick">${cells}</div></div>`;
     }
     if (f.t === "area") {
       return `<div class="field"><label>${esc(f.l)}</label><textarea data-f="${f.k}">${esc(v)}</textarea></div>`;
@@ -334,6 +341,18 @@
       obj.updated_at = new Date().toISOString();
       return obj;
     };
+
+    // sjónrænn tákn-velari: smellur setur falda input-gildið
+    card.querySelectorAll(".iconpick").forEach((pick) => {
+      const hidden = pick.parentElement.querySelector('input[type="hidden"][data-f]');
+      pick.querySelectorAll(".iconpick__btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          pick.querySelectorAll(".iconpick__btn").forEach((b) => b.classList.remove("is-sel"));
+          btn.classList.add("is-sel");
+          if (hidden) hidden.value = btn.getAttribute("data-ic");
+        });
+      });
+    });
 
     card.querySelector('[data-act="save"]').addEventListener("click", async () => {
       setState("", "Vista…");
