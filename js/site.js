@@ -124,6 +124,9 @@
         if (el.id === "contact-email") {
           el.textContent = text;
           el.setAttribute("href", "mailto:" + text);
+        } else if (el.id === "contact-phone") {
+          el.textContent = text;
+          el.setAttribute("href", "tel:" + text.replace(/\s+/g, ""));
         } else {
           el.textContent = text;
         }
