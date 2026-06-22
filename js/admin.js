@@ -8,6 +8,13 @@
 
   let currentEmail = null;
   const $ = (id) => document.getElementById(id);
+  const _dbg = [];
+  function dbg(s) {
+    _dbg.push(s);
+    console.log("[VH]", s);
+    const el = document.getElementById("login-dbg");
+    if (el) el.textContent = _dbg.join("\n");
+  }
   const esc = (s) =>
     String(s == null ? "" : s)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -18,14 +25,14 @@
   // AUTH
   // ---------------------------------------------------------
   async function initAuth() {
-    console.log("[VH] init, URL =", location.href);
+    dbg("init, hash=" + (location.hash ? "JÁ(" + location.hash.length + ")" : "nei") + " search=" + (location.search ? "JÁ" : "nei"));
     const { data, error } = await sb.auth.getSession();
-    console.log("[VH] getSession ->", { hasSession: !!(data && data.session), email: data && data.session && data.session.user && data.session.user.email, error: error && error.message });
+    dbg("getSession -> session=" + !!(data && data.session) + " email=" + (data && data.session && data.session.user && data.session.user.email) + (error ? " ERR=" + error.message : ""));
     handleSession(data.session);
     // ATH: ekki kalla á await sb.* beint inni í þessu callbacki — það læsir
     // auth-lásnum (deadlock). setTimeout keyrir handleSession utan við hann.
     sb.auth.onAuthStateChange((evt, session) => {
-      console.log("[VH] onAuthStateChange ->", evt, { hasSession: !!session });
+      dbg("onAuthStateChange -> " + evt + " session=" + !!session);
       setTimeout(() => handleSession(session), 0);
     });
 
@@ -48,11 +55,11 @@
 
   async function handleSession(session) {
     const email = session && session.user && session.user.email;
-    console.log("[VH] handleSession ->", { hasSession: !!session, email });
+    dbg("handleSession -> session=" + !!session + " email=" + email);
     if (!session) return showLogin();
     // Aðgangur ræðst af hvítlista (admins-töflu), ekki léninu.
     const { data: allowed, error } = await sb.rpc("is_admin");
-    console.log("[VH] is_admin ->", { allowed, error: error && error.message });
+    dbg("is_admin -> " + allowed + (error ? " ERR=" + error.message : ""));
     if (error) {
       sb.auth.signOut();
       showLogin("Villa við að staðfesta aðgang. Reyndu aftur.");
