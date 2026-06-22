@@ -12,6 +12,8 @@ body{margin:0;background:var(--navy);color:var(--ink);
 a{color:var(--green);text-decoration:none;}
 h1,h2,h3,h4,p{margin:0;}
 button{font-family:inherit;}
+/* tryggja að hidden-eiginleikinn virki þrátt fyrir display-reglur (.login o.fl.) */
+[hidden]{display:none !important;}
 
 /* ---- login ---- */
 .login{min-height:100vh;display:grid;place-items:center;padding:24px;}
