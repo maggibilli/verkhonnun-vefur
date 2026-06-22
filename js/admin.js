@@ -439,7 +439,22 @@
     if (error) return (panel.innerHTML = errBox(error));
     const rows = data || [];
 
+    const setting = await sb.from("app_settings").select("value").eq("key", "notify_email").maybeSingle();
+    const notifyEmail = (setting.data && setting.data.value) || "";
+
     let html = `<div class="toolbar"><h2>Fyrirspurnir (${rows.length})</h2></div>`;
+    html += `
+      <div class="card">
+        <div class="card__head"><span class="lbl">Tilkynningar í tölvupósti</span>
+          <div class="right"><span class="savestate" id="notify-state"></span>
+          <button class="btn btn--green btn--sm" id="notify-save">Vista</button></div>
+        </div>
+        <div class="field">
+          <label>Fyrirspurnir berast á þetta netfang</label>
+          <input id="notify-email" type="email" value="${esc(notifyEmail)}" placeholder="nafn@verkhonnun.is">
+          <span class="hint">Tölvupóstur er sendur sjálfkrafa þegar ný fyrirspurn berst.</span>
+        </div>
+      </div>`;
     if (!rows.length) html += `<div class="empty">Engar fyrirspurnir hafa borist.</div>`;
     html += rows.map((r) => {
       const date = new Date(r.created_at).toLocaleString("is-IS");
@@ -462,6 +477,19 @@
         </div>`;
     }).join("");
     panel.innerHTML = html;
+
+    const notifyBtn = $("notify-save");
+    if (notifyBtn) notifyBtn.addEventListener("click", async () => {
+      const st = $("notify-state");
+      const email = ($("notify-email").value || "").trim();
+      st.className = "savestate";
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { st.className = "savestate err"; st.textContent = "Ógilt netfang"; return; }
+      st.textContent = "Vista…";
+      const { error } = await sb.from("app_settings").upsert(
+        { key: "notify_email", value: email, updated_at: new Date().toISOString() }, { onConflict: "key" });
+      st.className = "savestate " + (error ? "err" : "ok");
+      st.textContent = error ? "Villa" : "Vistað ✓";
+    });
 
     panel.querySelectorAll(".sub[data-id]").forEach((el) => {
       const id = el.getAttribute("data-id");
