@@ -18,11 +18,14 @@
   // AUTH
   // ---------------------------------------------------------
   async function initAuth() {
-    const { data } = await sb.auth.getSession();
+    console.log("[VH] init, URL =", location.href);
+    const { data, error } = await sb.auth.getSession();
+    console.log("[VH] getSession ->", { hasSession: !!(data && data.session), email: data && data.session && data.session.user && data.session.user.email, error: error && error.message });
     handleSession(data.session);
     // ATH: ekki kalla á await sb.* beint inni í þessu callbacki — það læsir
     // auth-lásnum (deadlock). setTimeout keyrir handleSession utan við hann.
-    sb.auth.onAuthStateChange((_e, session) => {
+    sb.auth.onAuthStateChange((evt, session) => {
+      console.log("[VH] onAuthStateChange ->", evt, { hasSession: !!session });
       setTimeout(() => handleSession(session), 0);
     });
 
@@ -45,9 +48,11 @@
 
   async function handleSession(session) {
     const email = session && session.user && session.user.email;
+    console.log("[VH] handleSession ->", { hasSession: !!session, email });
     if (!session) return showLogin();
     // Aðgangur ræðst af hvítlista (admins-töflu), ekki léninu.
     const { data: allowed, error } = await sb.rpc("is_admin");
+    console.log("[VH] is_admin ->", { allowed, error: error && error.message });
     if (error) {
       sb.auth.signOut();
       showLogin("Villa við að staðfesta aðgang. Reyndu aftur.");
