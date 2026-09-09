@@ -8,6 +8,24 @@
 
   let currentEmail = null;
   const $ = (id) => document.getElementById(id);
+
+  // ---------------------------------------------------------
+  // Sjálfvirk útskráning eftir 10 mín óvirkni
+  // ---------------------------------------------------------
+  const IDLE_MS = 10 * 60 * 1000;
+  let idleTimer = null;
+  function resetIdle() {
+    if (!currentEmail) return; // aðeins þegar innskráð/ur
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(async () => {
+      currentEmail = null;
+      clearTimeout(idleTimer);
+      await sb.auth.signOut();
+      showLogin("Þú varst skráð/ur út sjálfkrafa eftir 10 mínútna óvirkni.");
+    }, IDLE_MS);
+  }
+  ["mousemove", "mousedown", "keydown", "scroll", "touchstart"].forEach((evt) =>
+    window.addEventListener(evt, resetIdle, { passive: true }));
   const esc = (s) =>
     String(s == null ? "" : s)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -63,6 +81,8 @@
   }
 
   function showLogin(err) {
+    clearTimeout(idleTimer);
+    currentEmail = null;
     $("app").hidden = true;
     $("login").hidden = false;
     if (err) $("login-err").textContent = err;
@@ -71,6 +91,7 @@
 
   function showApp(email) {
     currentEmail = email;
+    resetIdle(); // ræsa óvirkni-teljarann
     $("login").hidden = true;
     $("app").hidden = false;
     $("user-email").textContent = email;
