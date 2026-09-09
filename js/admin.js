@@ -210,7 +210,7 @@
       ],
     },
     projects: {
-      table: "projects", title: "Verkefni", image: true, publishable: true,
+      table: "projects", title: "Verkefni", image: true, hoverImage: true, publishable: true,
       label: (r) => r.title_is || "Nýtt verkefni",
       fields: [
         { k: "tag_is", l: "Merki (IS)", t: "text", w: "half" },
@@ -275,7 +275,7 @@
     });
     if (pending.length) fields += halfRow(pending, r);
 
-    const img = cfg.image ? imageBlock(r) : "";
+    const img = cfg.image ? imageBlock(r, cfg) : "";
     const hidden = cfg.publishable && r.published === false;
     const toggle = cfg.publishable
       ? `<button class="btn btn--sm pubtoggle ${hidden ? "is-off" : "is-on"}" data-act="toggle" title="${hidden ? "Smelltu til að birta" : "Smelltu til að fela"}">${hidden ? "● Falið" : "● Birt"}</button>`
@@ -322,12 +322,12 @@
     return `<div class="grid2">${fs.map((f) => fieldHtml(f, r)).join("")}</div>`;
   }
 
-  function imageBlock(r) {
+  function imageBlock(r, cfg) {
     const url = window.vhMediaUrl(r.image_path);
     const thumb = url
       ? `<img class="imgthumb" src="${esc(url)}" alt="">`
       : `<div class="imgthumb imgthumb--empty">Engin mynd</div>`;
-    return `
+    let html = `
       <div class="imgrow">
         ${thumb}
         <div>
@@ -337,6 +337,23 @@
           <p class="hint" style="margin-top:8px;">JPG/PNG/WebP. Geymt í Supabase Storage.</p>
         </div>
       </div>`;
+    if (cfg && cfg.hoverImage) {
+      const url2 = window.vhMediaUrl(r.hover_image_path);
+      const thumb2 = url2
+        ? `<img class="imgthumb" src="${esc(url2)}" alt="">`
+        : `<div class="imgthumb imgthumb--empty">Engin mynd</div>`;
+      html += `
+      <div class="imgrow">
+        ${thumb2}
+        <div>
+          <input type="file" accept="image/*" data-img2 style="display:none">
+          <button class="btn btn--ghost btn--sm" data-act="upload2">Hlaða upp hover-mynd</button>
+          ${r.hover_image_path ? `<button class="btn btn--danger btn--sm" data-act="rmimg2">Fjarlægja</button>` : ""}
+          <p class="hint" style="margin-top:8px;">Valfrjáls — birtist þegar bendill fer yfir spjaldið.</p>
+        </div>
+      </div>`;
+    }
+    return html;
   }
 
   function wireCard(panel, cfg, card, rows) {
@@ -414,6 +431,34 @@
       const rmBtn = card.querySelector('[data-act="rmimg"]');
       if (rmBtn) rmBtn.addEventListener("click", async () => {
         const { error } = await sb.from(cfg.table).update({ image_path: null, updated_at: new Date().toISOString() }).eq("id", id);
+        if (error) return alert("Villa: " + error.message);
+        renderList(panel, cfg);
+      });
+
+      // hover-mynd (valfrjáls auka-mynd sem birtist við bendil)
+      const fileInput2 = card.querySelector("[data-img2]");
+      const uploadBtn2 = card.querySelector('[data-act="upload2"]');
+      if (uploadBtn2 && fileInput2) {
+        uploadBtn2.addEventListener("click", () => fileInput2.click());
+        fileInput2.addEventListener("change", async () => {
+          const file = fileInput2.files[0];
+          if (!file) return;
+          setState("", "Hleð upp mynd…");
+          const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+          const path = `${cfg.table}/${id}-hover-${Date.now()}.${ext}`;
+          const up = await sb.storage.from(window.VH_SUPABASE.bucket).upload(path, file, { upsert: true, contentType: file.type || undefined });
+          if (up.error) {
+            alert("Villa við að hlaða upp mynd:\n" + (up.error.message || up.error));
+            return setState("err", "Villa við upphal");
+          }
+          const { error } = await sb.from(cfg.table).update({ hover_image_path: path, updated_at: new Date().toISOString() }).eq("id", id);
+          if (error) return setState("err", "Villa");
+          renderList(panel, cfg);
+        });
+      }
+      const rmBtn2 = card.querySelector('[data-act="rmimg2"]');
+      if (rmBtn2) rmBtn2.addEventListener("click", async () => {
+        const { error } = await sb.from(cfg.table).update({ hover_image_path: null, updated_at: new Date().toISOString() }).eq("id", id);
         if (error) return alert("Villa: " + error.message);
         renderList(panel, cfg);
       });

@@ -80,16 +80,19 @@
 
     document.getElementById("projs").innerHTML = state.projects.map((p) => {
       const img = window.vhMediaUrl(p.image_path);
+      const img2 = window.vhMediaUrl(p.hover_image_path);
       const media = img
-        ? `<img src="${esc(img)}" alt="${esc(p["title_" + L])}" loading="lazy">`
+        ? `<img src="${esc(img)}" alt="${esc(p["title_" + L])}" loading="lazy">` +
+          (img2 ? `<img class="proj__imghover" src="${esc(img2)}" alt="" loading="lazy">` : "")
         : `<span class="wm vh-svg" data-vh="assets/logo/symbol-green.svg" style="width:38%;right:-4%;bottom:-8%;"></span><span class="proj__ph">Ljósmynd</span>`;
+      const meta = (p["meta_" + L] || "").trim();
       return `
       <article class="proj">
         <div class="proj__img">${media}<span class="proj__tag">${esc(p["tag_" + L])}</span></div>
         <div class="proj__txt">
           <h3>${esc(p["title_" + L])}</h3>
           <p>${esc(p["desc_" + L])}</p>
-          <div class="proj__meta">${esc(p["meta_" + L])}</div>
+          ${meta ? `<div class="proj__meta">${esc(meta)}</div>` : ""}
         </div>
       </article>`;
     }).join("");
