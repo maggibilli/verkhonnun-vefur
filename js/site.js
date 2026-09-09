@@ -50,15 +50,20 @@
   function renderLists() {
     const L = lang;
 
-    document.getElementById("svc-list").innerHTML = state.services.map((s) => `
-      <div class="svc__row">
+    document.getElementById("svc-list").innerHTML = state.services.map((s) => {
+      const link = (s.link || "").trim();
+      const body = `
         <div class="svc__num">${esc(s.num)}</div>
         <div class="svc__body">
           <span class="ic svc__ic vh-svg" data-vh="assets/icons/${esc(s.icon || "i19")}.svg"></span>
           <div class="svc__t">${esc(s["title_" + L])}</div>
           <p class="svc__d">${esc(s["desc_" + L])}</p>
-        </div>
-      </div>`).join("");
+          ${link ? `<div class="svc__more">${L === "en" ? "Learn more" : "Nánar"} →</div>` : ""}
+        </div>`;
+      return link
+        ? `<a class="svc__row svc__row--link" href="${esc(link)}">${body}</a>`
+        : `<div class="svc__row">${body}</div>`;
+    }).join("");
 
     document.getElementById("vals").innerHTML = state.values.map((v) => `
       <div class="val">

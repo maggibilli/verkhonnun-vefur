@@ -80,6 +80,9 @@ section{position:relative;}
 .svc__ic{color:var(--green);margin-bottom:26px;}
 .svc__t{font-size:clamp(21px,2vw,25px);font-weight:600;letter-spacing:-.01em;line-height:1.12;}
 .svc__d{color:var(--muted);font-size:16px;margin-top:12px;}
+.svc__row--link{display:block;color:inherit;cursor:pointer;}
+.svc__more{margin-top:16px;color:var(--green);font-size:14px;font-weight:600;transition:transform .2s;}
+.svc__row--link:hover .svc__more{transform:translateX(4px);}
 
 /* STATEMENT — green block, navy ink */
 .statement{background:var(--green);color:var(--navy);position:relative;overflow:hidden;}

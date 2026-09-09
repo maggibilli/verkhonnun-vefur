@@ -185,6 +185,7 @@
         { k: "title_en", l: "Titill (EN)", t: "text" },
         { k: "desc_is", l: "Lýsing (IS)", t: "area" },
         { k: "desc_en", l: "Lýsing (EN)", t: "area" },
+        { k: "link", l: "Tengill á undirsíðu (valfrjálst, t.d. gagnaver.html)", t: "text" },
       ],
     },
     values: {
