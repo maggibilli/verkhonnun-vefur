@@ -99,8 +99,10 @@
 
     document.getElementById("team").innerHTML = state.team.map((m) => {
       const img = window.vhMediaUrl(m.image_path);
+      const img2 = window.vhMediaUrl(m.hover_image_path);
       const media = img
-        ? `<img src="${esc(img)}" alt="${esc(m.name)}" loading="lazy">`
+        ? `<img src="${esc(img)}" alt="${esc(m.name)}" loading="lazy">` +
+          (img2 ? `<img class="mem__imghover" src="${esc(img2)}" alt="" loading="lazy">` : "")
         : `<span class="wm vh-svg" data-vh="assets/logo/symbol-green.svg" style="width:52%;left:50%;transform:translateX(-50%);bottom:-11%;"></span><span class="mem__ph">Portrett</span>`;
       const email = (m.email || "").trim();
       const phone = (m.phone || "").trim();

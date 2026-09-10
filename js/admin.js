@@ -245,7 +245,7 @@
       ],
     },
     team: {
-      table: "team", title: "Teymi", image: true, publishable: true,
+      table: "team", title: "Teymi", image: true, hoverImage: true, publishable: true,
       label: (r) => r.name || "Nýr meðlimur",
       fields: [
         { k: "name", l: "Nafn", t: "text" },
