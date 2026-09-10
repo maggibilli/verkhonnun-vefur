@@ -36,6 +36,18 @@ section{position:relative;}
 .nav__links a::after{content:"";position:absolute;left:0;bottom:-3px;width:0;height:2px;background:var(--green);transition:width .25s;}
 .nav__links a:hover::after{width:100%;}
 .nav__right{display:flex;align-items:center;gap:18px;}
+/* hamborgari (aðeins í síma) */
+.nav__burger{display:none;width:42px;height:42px;align-items:center;justify-content:center;flex:none;
+  background:transparent;border:1px solid var(--line);border-radius:11px;cursor:pointer;padding:0;}
+.nav__burger span{position:relative;display:block;width:18px;height:2px;background:var(--ink);transition:background .25s;}
+.nav__burger span::before,.nav__burger span::after{content:"";position:absolute;left:0;width:18px;height:2px;
+  background:var(--ink);transition:transform .3s cubic-bezier(.4,0,.2,1);}
+.nav__burger span::before{top:-6px;}
+.nav__burger span::after{top:6px;}
+.nav.is-open .nav__burger span{background:transparent;}
+.nav.is-open .nav__burger span::before{transform:translateY(6px) rotate(45deg);}
+.nav.is-open .nav__burger span::after{transform:translateY(-6px) rotate(-45deg);}
+.nav__mcta{display:none;}
 .lang{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;}
 .lang button{font-family:inherit;font-size:12.5px;font-weight:600;border:0;background:transparent;color:var(--muted);padding:6px 11px;cursor:pointer;transition:.18s;}
 .lang button.is-active{background:var(--green);color:var(--navy);}
@@ -184,7 +196,23 @@ section{position:relative;}
   .team{grid-template-columns:repeat(2,1fr);}
 }
 @media(max-width:680px){
-  .nav__links{display:none;}
+  .nav__burger{display:flex;}
+  .nav__right > .btn{display:none;}          /* CTA færist inn í valmyndina */
+  .nav__in{gap:14px;}                         /* pláss fyrir hamborgarann */
+  .nav__right{gap:12px;}
+  .logo-word{height:24px;}
+  .nav__links{
+    position:fixed;top:80px;left:0;right:0;flex-direction:column;gap:0;margin:0;
+    background:var(--navy);border-bottom:1px solid var(--line);
+    padding:6px var(--gut) 28px;max-height:calc(100dvh - 80px);overflow-y:auto;
+    transform:translateY(-115%);opacity:0;visibility:hidden;
+    transition:transform .38s cubic-bezier(.4,0,.2,1),opacity .25s ease,visibility .38s;
+  }
+  .nav.is-open .nav__links{transform:none;opacity:1;visibility:visible;}
+  .nav__links a{font-size:19px;padding:17px 0;opacity:1;border-bottom:1px solid var(--line-soft);}
+  .nav__links a::after{display:none;}
+  .nav__links a.nav__mcta{display:inline-flex;justify-content:center;margin-top:24px;
+    border-bottom:0;font-size:15px;color:var(--navy);font-weight:600;}
   .svc,.guides,.projs{grid-template-columns:1fr;}
   .val{grid-template-columns:1fr;gap:8px;}
 }

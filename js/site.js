@@ -188,6 +188,25 @@
     });
   }
 
+  // ----- farsímavalmynd -----
+  function wireNav() {
+    const nav = document.querySelector(".nav");
+    const burger = document.getElementById("nav-burger");
+    if (!nav || !burger) return;
+    const close = () => {
+      nav.classList.remove("is-open");
+      burger.setAttribute("aria-expanded", "false");
+    };
+    burger.addEventListener("click", () => {
+      const open = nav.classList.toggle("is-open");
+      burger.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    // loka við smell á tengil, Esc, eða þegar skipt er á breiðan skjá
+    nav.querySelectorAll(".nav__links a").forEach((a) => a.addEventListener("click", close));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+    window.addEventListener("resize", () => { if (window.innerWidth > 680) close(); });
+  }
+
   // ----- init -----
   async function init() {
     try {
@@ -197,6 +216,7 @@
     }
     applyLang(lang);
     wireForm();
+    wireNav();
     document.querySelectorAll("[data-lang]").forEach((b) => {
       b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
     });
