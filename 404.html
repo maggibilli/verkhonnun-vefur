@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Síða fannst ekki — Verkhönnun</title>
+<meta name="robots" content="noindex,follow">
+<link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+.nf{min-height:calc(100vh - 80px);display:flex;align-items:center;position:relative;overflow:hidden;}
+.nf__mark{position:absolute;right:-8%;top:-10%;width:min(58vw,760px);color:var(--green-soft);opacity:.14;pointer-events:none;}
+.nf__in{position:relative;z-index:1;max-width:760px;}
+.nf h1{font-weight:500;letter-spacing:-.02em;line-height:1;font-size:clamp(64px,12vw,140px);color:var(--green);}
+.nf h2{font-weight:500;letter-spacing:-.02em;line-height:1.1;font-size:clamp(26px,4vw,44px);margin-top:14px;}
+.nf p{color:var(--muted);margin-top:20px;font-size:clamp(16px,1.6vw,19px);max-width:52ch;line-height:1.7;}
+.nf__links{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px;}
+.nf__links a{border:1px solid var(--line);border-radius:999px;padding:11px 20px;font-size:15px;
+  font-weight:500;color:var(--ink);transition:border-color .18s,color .18s;}
+.nf__links a:hover{border-color:var(--green);color:var(--green);}
+.nf__cta{margin-top:34px;display:flex;flex-wrap:wrap;gap:12px;}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a href="/" class="nav__logo"><span class="vh-svg logo-word" data-vh="/assets/logo/wordmark-green.svg"></span></a>
+    <div class="nav__right" style="margin-left:auto;">
+      <a href="/" class="btn btn--green">Á forsíðu</a>
+    </div>
+  </div>
+</header>
+
+<section class="nf">
+  <span class="nf__mark vh-svg" data-vh="/assets/logo/symbol-green.svg"></span>
+  <div class="wrap nf__in">
+    <h1>404</h1>
+    <h2>Þessi síða fannst ekki</h2>
+    <p>Slóðin sem þú slóst inn er ekki lengur til. Vefur Verkhönnunar var endurnýjaður
+    og eldri slóðir hafa færst til — hér fyrir neðan kemstu beint á réttan stað.</p>
+
+    <div class="nf__links">
+      <a href="/#thjonusta">Þjónusta</a>
+      <a href="/#um">Um okkur</a>
+      <a href="/#verkefni">Verkefni</a>
+      <a href="/#teymi">Teymið</a>
+      <a href="/gagnaver.html">Gagnaver</a>
+    </div>
+
+    <div class="nf__cta">
+      <a href="/#hafa-samband" class="btn btn--green">Hafa samband <span class="arr">→</span></a>
+      <a href="/" class="btn btn--ghost">Skoða forsíðuna</a>
+    </div>
+  </div>
+</section>
+
+<script src="/js/brand.js"></script>
+</body>
+</html>

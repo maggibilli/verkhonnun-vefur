@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Faldar síður eru merktar noindex í HTML-inu sjálfu (ekki lokað hér,
+# því skriður þarf að geta lesið noindex-merkinguna).
+
+Sitemap: https://verkhonnun.is/sitemap.xml

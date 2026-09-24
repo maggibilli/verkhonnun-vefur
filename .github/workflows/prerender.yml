@@ -1,0 +1,48 @@
+name: Forsteypa efnis (SEO)
+
+# Sækir efni úr Supabase og skrifar það sem raunverulegt HTML í index.html,
+# svo leitarvélar sjái textann án þess að keyra JavaScript.
+# Keyrir reglulega svo breytingar úr stjórnborðinu skili sér í HTML-ið.
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"      # á 6 klukkustunda fresti
+  workflow_dispatch:            # má líka ræsa handvirkt í Actions-flipanum
+  push:
+    branches: [main]
+    paths:
+      - "tools/prerender.py"
+      - ".github/workflows/prerender.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prerender
+  cancel-in-progress: false
+
+jobs:
+  prerender:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sækja efni og skrifa í index.html
+        run: python tools/prerender.py
+
+      - name: Vista ef eitthvað breyttist
+        run: |
+          if [ -n "$(git status --porcelain index.html)" ]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.html
+            git commit -m "Forsteypa: uppfæra efni úr Supabase [skip ci]"
+            git push
+            echo "index.html uppfært og ýtt."
+          else
+            echo "Ekkert breyttist — efnið í HTML er þegar í takt við gagnagrunninn."
+          fi
