@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Persónuverndarstefna – Vista á verk | Verkhönnun</title>
+<meta name="description" content="Persónuverndarstefna skjalavistunarkerfis Verkhönnunar ehf. — Gmail-viðbótin Vista á verk og vefurinn Verkskjöl.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/favicon/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/favicon/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="stylesheet" href="/fonts.css">
+<link rel="stylesheet" href="../skjal.css">
+</head>
+<body>
+
+<header class="doc-head">
+  <div class="wrap doc-head__in">
+    <img src="/assets/merki/verkhonnun-wordmark-navy.svg" alt="Verkhönnun" width="200" height="30">
+    <span class="doc-head__tag">Vista á verk · Verkskjöl</span>
+  </div>
+</header>
+
+<div class="wrap doc-title">
+  <h1>Persónuverndarstefna – Vista á verk og Verkskjöl</h1>
+  <p class="meta"><strong>Gildir frá:</strong> 3. október 2026 · <strong>Útgáfa:</strong> 1.0</p>
+</div>
+
+<main class="wrap">
+
+  <h2>1. Um hvað þessi stefna fjallar</h2>
+  <p>Verkhönnun ehf., kt. 650107-1280, Katrínartúni 5, 105 Reykjavík, („Verkhönnun“, „við“) rekur skjalavistunarkerfi fyrir eigin starfsemi. Kerfið samanstendur af Gmail-viðbótinni <strong>Vista á verk</strong>, vefnum <strong>Verkskjöl</strong> og þjónustu á netþjóni fyrirtækisins. Það er eingöngu ætlað starfsmönnum Verkhönnunar með reikning á léninu verkhonnun.is og er ekki aðgengilegt öðrum.</p>
+  <p>Þessi stefna lýsir því hvaða upplýsingar kerfið vinnur með, hvers vegna, hvar þær eru geymdar og hvaða réttindi starfsmenn hafa. Hún er birt í samræmi við kröfur Google um viðbætur sem nota Google Workspace API, og í samræmi við lög nr. 90/2018 um persónuvernd og vinnslu persónuupplýsinga.</p>
+
+  <h2>2. Tilgangur vinnslunnar</h2>
+  <p>Kerfið vistar tölvupósta, viðhengi og önnur verkgögn á verkdrif fyrirtækisins á rekjanlegan hátt, þannig að hvert skjal sé tengt verki, starfsmanni og tíma. Þetta er hluti af gæðastjórnunarkerfi Verkhönnunar samkvæmt ISO 9001 og lagaskyldu hönnuða um varðveislu verkgagna samkvæmt byggingarreglugerð.</p>
+
+  <h2>3. Hvaða upplýsingar eru unnar</h2>
+
+  <h3>3.1 Gmail-viðbótin Vista á verk</h3>
+  <p>Þegar starfsmaður opnar póst með viðbótinni les hún, innan Gmail-reiknings starfsmannsins sjálfs, efnislínu, sendanda, meginmál og nöfn viðhengja til að stinga upp á verki. Þessi lestur fer fram í Google-umhverfi (Apps Script) og <strong>meginmál póstsins fer ekki út úr Google</strong> á þessu stigi.</p>
+  <p>Þegar starfsmaður smellir á „Vista á verk“ eru eftirfarandi upplýsingar sendar á gagnagrunn kerfisins: netfang starfsmannsins, auðkenni póstsins og þráðarins í Gmail, valið verknúmer, skjalategund, mappa, nöfn valinna viðhengja og þær tillögur sem viðbótin sýndi. Meginmál og viðhengi eru <strong>ekki</strong> send þessa leið.</p>
+
+  <h3>3.2 Þjónustan á netþjóni Verkhönnunar</h3>
+  <p>Þjónusta á netþjóni fyrirtækisins (í húsnæði Verkhönnunar á Íslandi) sækir þá póstinn sjálfan beint frá Google með Gmail API, fyrir hönd þess starfsmanns sem bað um vistun og aðeins þann póst sem hann valdi. Heimildin byggir á lénsvíðri umboðsveitingu (domain-wide delegation) sem kerfisstjóri Verkhönnunar hefur veitt. Pósturinn (.eml) og viðhengin eru vistuð á verkdrif fyrirtækisins. Þjónustan setur merkimiðann „Vistað á verk“ á póstinn í Gmail starfsmannsins.</p>
+
+  <h3>3.3 Gæðaskrá</h3>
+  <p>Fyrir hverja vistun, skráningu, eyðingu eða færslu skjals er skráð: tími, netfang starfsmanns, verknúmer, skjalategund, slóð á verkdrifi, nöfn skráa, stærð og SHA-256 hakk þeirra, sendandi og efnislína póstsins, og hvort tillaga kerfisins var rétt. Þessi gæðaskrá er óbreytanleg (færslum verður hvorki breytt né eytt) og er hluti af gæðastjórnunarkerfinu.</p>
+
+  <h3>3.4 Vefurinn Verkskjöl</h3>
+  <p>Innskráning fer fram með Google-reikningi starfsmannsins. Kerfið fær netfang og nafn úr reikningnum og heldur innskráningu í allt að 12 klukkustundir. Vefurinn sýnir gæðaskrána, leit í skráarnöfnum og möppuslóðum á verkdrifum, frávik og mæla. Allir starfsmenn sjá sömu gögn.</p>
+
+  <h3>3.5 Skrár á verkdrifum</h3>
+  <p>Kerfið skráir nöfn, möppuslóðir, stærð, breytingartíma og eiganda (notandanafn þess sem vistaði) allra skráa á verkdrifum fyrirtækisins til að gera leit mögulega. Innihald skráa er ekki lesið nema til að reikna hakk fyrir skjöl sem fara í gegnum kerfið.</p>
+
+  <h3>3.6 Eyðingar og færslur</h3>
+  <p>Netþjónn fyrirtækisins skráir hver eyddi eða færði skrá á verkdrifi, hvenær og hvaðan (IP-tala innanhúss), eins og venja er um aðgerðaskráningu á skráaþjónum. Eyddar skrár eru geymdar í ruslafötu á drifinu í 180 daga.</p>
+
+  <h3>3.7 Tölvupóstur frá kerfinu</h3>
+  <p>Kerfið sendir starfsmönnum áminningar um frávik í tölvupósti frá no-reply@verkhonnun.is og gæðastjóra mánaðaryfirlit. Þessir póstar innihalda verknúmer, skráarnöfn og nöfn starfsmanna.</p>
+
+  <h3>3.8 Gervigreind (valkvætt)</h3>
+  <p>Starfsmaður getur, með sérstökum smelli á hnapp merktan aðvörun, látið gervigreind stinga upp á verki. Þá eru efnislína, sendandi og allt að 2.000 stafir úr meginmáli póstsins send til Anthropic PBC (Bandaríkin) til greiningar. Þetta gerist aldrei sjálfkrafa, notkunin er skráð í gæðaskrána og hnappurinn er ekki sýndur nema kerfisstjóri hafi virkjað hann. Starfsmönnum er leiðbeint um að nota þetta ekki fyrir trúnaðar- eða útboðsgögn.</p>
+
+  <h2>4. Hvar upplýsingar eru geymdar</h2>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>Upplýsingar</th><th>Staður</th><th>Vinnsluaðili</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tölvupóstar, viðhengi og öll verkgögn</td>
+          <td>Netþjónn Verkhönnunar á Íslandi (verkdrif)</td>
+          <td>Verkhönnun sjálf</td>
+        </tr>
+        <tr>
+          <td>Gæðaskrá, verkefnaskrá, skráarlisti, notendaskrá</td>
+          <td>Gagnagrunnur hjá Supabase Inc., hýstur í Stokkhólmi, Svíþjóð (Evrópska efnahagssvæðið)</td>
+          <td>Supabase (vinnslusamningur og staðlaðir samningsskilmálar)</td>
+        </tr>
+        <tr>
+          <td>Afrit gæðaskrár</td>
+          <td>Innanhúss drif Verkhönnunar, uppfært á hverri nóttu</td>
+          <td>Verkhönnun sjálf</td>
+        </tr>
+        <tr>
+          <td>Innskráning</td>
+          <td>Supabase Auth með Google sem auðkennisveitu</td>
+          <td>Supabase, Google</td>
+        </tr>
+        <tr>
+          <td>Valkvæð gervigreindartillaga</td>
+          <td>Anthropic PBC, Bandaríkin</td>
+          <td>Anthropic (gögn ekki notuð til þjálfunar skv. skilmálum API)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Meginmál pósta og viðhengi fara aldrei um Supabase og aldrei til þriðja aðila nema starfsmaður velji gervigreindartillögu sérstaklega.</p>
+
+  <h2>5. Notkun á gögnum úr Google-þjónustum</h2>
+  <p>Notkun kerfisins á upplýsingum sem það fær úr Google API fylgir <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>, þar með töldum kröfum um takmarkaða notkun (Limited Use). Gögn úr Gmail eru eingöngu notuð til að vista þann póst sem starfsmaður bað um að vista á verk, til að merkja hann og til að stinga upp á verki. Þau eru ekki notuð í auglýsingar, ekki seld og ekki afhent öðrum, og engin manneskja utan Verkhönnunar les þau nema með samþykki starfsmanns vegna öryggismála eða lagaskyldu.</p>
+  <p>Heimildir sem viðbótin og þjónustan nota í Google Workspace: lesa póst (gmail.readonly), setja merkimiða (gmail.labels, gmail.modify), senda áminningar fyrir hönd kerfisreiknings (gmail.send, gmail.settings.sharing) og lesa notendalista lénsins (admin.directory.user.readonly).</p>
+
+  <h2>6. Varðveislutími</h2>
+  <p>Verkgögn og gæðaskrá eru varðveitt á meðan Verkhönnun starfar. Um er að ræða hönnunargögn mannvirkja sem ábyrgð hönnuða og kröfur byggingaryfirvalda ná til, og persónuupplýsingar í þeim takmarkast við nöfn, vinnunetföng og vinnusamskipti. Varðveislan er endurskoðuð árlega í rýni gæðakerfisins. Innskráningarupplýsingar renna út eftir 12 klukkustundir. Eyddar skrár í ruslafötu er fjarlægðar eftir 180 daga. Aðgerðaskrá skráaþjóns er geymd í allt að 2 ár.</p>
+
+  <h2>7. Aðgangur og öryggi</h2>
+  <p>Aðgangur krefst innskráningar með Google-reikningi á verkhonnun.is og virks notanda í notendaskrá kerfisins; honum er lokað þegar starfsmaður hættir. Vefurinn er innanhúss og dulkóðaður (https). Leynilyklar kerfisins eru geymdir á netþjóni fyrirtækisins með takmörkuðum aðgangi. Gæðaskráin er óbreytanleg og afrituð daglega.</p>
+
+  <h2>8. Réttindi starfsmanna</h2>
+  <p>Starfsmenn eiga rétt á að fá upplýsingar um hvaða gögn um þá eru skráð í kerfinu, og á leiðréttingu rangra upplýsinga. Þar sem gæðaskráin er óbreytanleg er leiðrétting gerð með nýrri færslu sem vísar í þá eldri. Fyrirspurnir og athugasemdir berist til gæðastjóra á verkhonnun@verkhonnun.is, sem tekur einnig við erindum um persónuvernd. Einnig má leita til Persónuverndar, www.personuvernd.is.</p>
+
+  <h2>9. Breytingar</h2>
+  <p>Stefnan er endurskoðuð þegar kerfinu er breytt og að minnsta kosti árlega með rýni gæðakerfisins. Dagsetning og útgáfunúmer efst segja til um gildandi útgáfu.</p>
+
+  <hr>
+
+  <div class="summary">
+    <p>English summary for Google reviewers: “Vista á verk” is an internal Gmail add-on used only by employees of Verkhönnun ehf. (Iceland). It reads the open email within the user's own mailbox to suggest a project, and on the user's explicit action saves the chosen attachments and the message to the company's on-premises file server. Only metadata (user email, message id, project number, document type, folder, file names) is stored in a database hosted in the EU (Supabase, Stockholm). Email content never leaves Google except to the company's own server, and optionally to Anthropic when the user explicitly requests an AI suggestion. Use of Google API data complies with the Google API Services User Data Policy, including the Limited Use requirements. Contact: verkhonnun@verkhonnun.is.</p>
+  </div>
+
+</main>
+
+<footer class="wrap doc-foot">
+  <span>Verkhönnun ehf. · kt. 650107-1280 · verkhonnun@verkhonnun.is</span>
+  <a href="../skilmalar/">Notkunarskilmálar →</a>
+</footer>
+
+</body>
+</html>
